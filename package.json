@@ -7,8 +7,8 @@
     "build": "remix build",
     "dev": "remix watch",
     "postinstall": "remix setup cloudflare-workers && npx patch-package",
-    "build:worker": "esbuild --define:process.env.NODE_ENV='\"production\"' --minify --bundle --sourcemap --outdir=dist ./worker",
-    "dev:worker": "esbuild --define:process.env.NODE_ENV='\"development\"' --bundle --sourcemap --outdir=dist ./worker",
+    "build:worker": "NODE_ENV=production node worker.build.js",
+    "dev:worker": "node worker.build.js",
     "start": "miniflare --build-command \"npm run dev:worker\" --watch",
     "deploy": "npm run build && wrangler publish"
   },
@@ -26,6 +26,7 @@
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "esbuild": "0.13.14",
+    "esbuild-plugin-alias": "^0.2.1",
     "miniflare": "2.0.0-next.3",
     "patch-package": "^6.4.7",
     "typescript": "^4.1.2"
