@@ -1,4 +1,4 @@
-name = "remix-cloudflare-workers"
+name = "remix-emotion"
 type = "javascript"
 
 zone_id = ""
