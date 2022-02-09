@@ -1,4 +1,6 @@
 import { hydrate } from "react-dom";
 import { RemixBrowser } from "remix";
+import { CacheProvider } from '@emotion/react'
+import { cache } from  '~/emotion/cache'
 
-hydrate(<RemixBrowser />, document);
+hydrate(<CacheProvider value={cache}><RemixBrowser /></CacheProvider>, document);
