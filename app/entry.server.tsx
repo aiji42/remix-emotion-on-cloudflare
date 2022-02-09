@@ -3,8 +3,9 @@ import { RemixServer } from "remix";
 import { CacheProvider } from '@emotion/react'
 import type { EntryContext } from "remix"
 import createEmotionServer from '@emotion/server/create-instance'
-import { cache } from  '~/emotion/cache'
+import createCache from "@emotion/cache";
 
+const cache = createCache({ key: 'css' })
 const { extractCriticalToChunks, constructStyleTagsFromChunks } = createEmotionServer(cache)
 
 export default function handleRequest(
