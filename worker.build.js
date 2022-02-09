@@ -12,9 +12,9 @@ require('esbuild')
     define: {},
     plugins: [
       alias({
-        'through': path.resolve(__dirname, 'app/polyfills/through.js'),
-        'html-tokenize': path.resolve(__dirname, 'app/polyfills/html-tokenize.js'),
-        'multipipe' :path.resolve(__dirname, 'app/polyfills/multipipe.js'),
+        'through': require.resolve('no-op'),
+        'html-tokenize': require.resolve('no-op'),
+        'multipipe': require.resolve('no-op'),
         '@emotion/react': require.resolve('@emotion/react'),
         '@emotion/cache': require.resolve('@emotion/cache'),
       })
