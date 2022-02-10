@@ -1,23 +1,50 @@
 import { css } from "@emotion/react"
 import feedItemDataset from "~/datas/dummy-feed-items.json"
-import { FeedItem, Data as feedItemDataType } from "~/components/FeedItem"
-import { LoaderFunction, useLoaderData } from "remix"
+import { FeedItem, Data } from "~/components/FeedItem"
+import { LoaderFunction, useLoaderData, Link } from "remix"
 
 export const loader: LoaderFunction = async () => {
   return feedItemDataset
 }
 
 export default function Home() {
-  const data = useLoaderData()
+  const data = useLoaderData<Data[]>()
 
   return (
     <>
       <h2 css={styles.headline}>ホーム</h2>
-      {data.map((feedItemData: feedItemDataType) => (
+      <FeedItem
+        data={{
+          ...data[data.length - 1],
+          url: "/not-found",
+          title: "link to not found page",
+          thumbnail: undefined,
+        }}
+        css={styles.feedItem}
+      />
+      <FeedItem
+        data={{
+          ...data[data.length - 1],
+          url: "/error",
+          title: "link to internal server error page",
+          thumbnail: undefined,
+        }}
+        css={styles.feedItem}
+      />
+      <FeedItem
+        data={{
+          ...data[data.length - 1],
+          url: "/client-error",
+          title: "link to client error page",
+          thumbnail: undefined,
+        }}
+        css={styles.feedItem}
+      />
+      {data.map((feedItemData) => (
         <FeedItem data={feedItemData} key={feedItemData.title} css={styles.feedItem} />
       ))}
     </>
-  );
+  )
 }
 
 const styles = {
@@ -32,4 +59,4 @@ const styles = {
     font-weight: bold;
     color: coral;
   `,
-};
+}

@@ -1,31 +1,29 @@
-import { ComponentPropsWithRef, forwardRef } from "react";
-import { css } from "@emotion/react";
+import { ComponentPropsWithRef, forwardRef } from "react"
+import { css } from "@emotion/react"
 
-export type Data = { title: string; url: string }[];
+export type Data = { title: string; url: string }[]
 
 type Props = {
-  dataset: Data;
-  className?: string;
-} & ComponentPropsWithRef<"div">;
+  dataset: Data
+  className?: string
+} & ComponentPropsWithRef<"div">
 
-export const Ranking = forwardRef<HTMLDivElement, Props>(
-  ({ dataset, ...props }, ref) => {
-    return (
-      <div css={styles.ranking} {...props} ref={ref}>
-        <h2 css={styles.headline}>ランキング</h2>
-        <ol css={styles.list}>
-          {dataset.map((data) => (
-            <li key={data.title} css={styles.listItem}>
-              <a href={data.url} css={styles.link}>
-                {data.title}
-              </a>
-            </li>
-          ))}
-        </ol>
-      </div>
-    );
-  }
-);
+export const Ranking = forwardRef<HTMLDivElement, Props>(({ dataset, ...props }, ref) => {
+  return (
+    <div css={styles.ranking} {...props} ref={ref}>
+      <h2 css={styles.headline}>ランキング</h2>
+      <ol css={styles.list}>
+        {dataset.map((data) => (
+          <li key={data.title} css={styles.listItem}>
+            <a href={data.url} css={styles.link}>
+              {data.title}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+})
 
 const styles = {
   ranking: css`
@@ -57,4 +55,4 @@ const styles = {
       color: var(--color-primary-dark);
     }
   `,
-};
+}

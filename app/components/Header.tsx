@@ -1,11 +1,11 @@
-import { ComponentPropsWithRef, forwardRef } from "react";
-import { css } from "@emotion/react";
-import { Button } from "~/components/Button";
-import logoImage from "~/images/logotype.svg";
+import { ComponentPropsWithRef, forwardRef } from "react"
+import { css } from "@emotion/react"
+import { Button } from "~/components/Button"
+import logoImage from "~/images/logotype.svg"
 
 type Props = {
-  className?: string;
-} & ComponentPropsWithRef<"header">;
+  className?: string
+} & ComponentPropsWithRef<"header">
 
 export const Header = forwardRef<HTMLElement, Props>(({ ...props }, ref) => {
   return (
@@ -26,8 +26,8 @@ export const Header = forwardRef<HTMLElement, Props>(({ ...props }, ref) => {
         />
       </div>
     </header>
-  );
-});
+  )
+})
 
 const styles = {
   header: css`
@@ -55,4 +55,4 @@ const styles = {
     border-radius: 50%;
     margin-left: 24px;
   `,
-};
+}

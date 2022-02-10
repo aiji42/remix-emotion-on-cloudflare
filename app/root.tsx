@@ -1,14 +1,5 @@
 import React, { FC } from "react"
-import {
-  Links,
-  LiveReload,
-  LoaderFunction,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useCatch,
-} from "remix"
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from "remix"
 import type { MetaFunction } from "remix"
 import { css, Global } from "@emotion/react"
 import { globalStyles } from "~/components/GlobalStyle"
@@ -20,15 +11,6 @@ import { Footer } from "~/components/Footer"
 
 export const meta: MetaFunction = () => {
   return { title: "New Remix App" }
-}
-
-export const loader: LoaderFunction = ({ params }) => {
-  if (params.post === "root-error")
-    throw new Response("CatchBoundaryの検証のためエラーです。", {
-      status: 500,
-    })
-
-  return null
 }
 
 export function links() {
@@ -49,19 +31,19 @@ export function links() {
 const Wrapper: FC = ({ children }) => {
   return (
     <html lang="en">
-    <head>
-      <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
-      <Meta />
-      <Links />
-    </head>
-    <body>
-    {children}
-    <ScrollRestoration />
-    <Scripts />
-    <Global styles={globalStyles} />
-    {process.env.NODE_ENV === "development" && <LiveReload />}
-    </body>
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+        <Global styles={globalStyles} />
+        {process.env.NODE_ENV === "development" && <LiveReload />}
+      </body>
     </html>
   )
 }

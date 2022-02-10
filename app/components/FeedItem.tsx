@@ -1,22 +1,22 @@
-import React, { ComponentPropsWithRef, forwardRef } from "react";
-import { css } from "@emotion/react";
-import { Button } from "~/components/Button";
-import { Link } from "remix";
+import React, { ComponentPropsWithRef, forwardRef } from "react"
+import { css } from "@emotion/react"
+import { Button } from "~/components/Button"
+import { Link } from "remix"
 
 export type Data = {
-  thumbnail?: string;
-  date: string;
-  title: string;
-  favorites: number;
-  comments: number;
-  url: string;
-};
+  thumbnail?: string
+  date: string
+  title: string
+  favorites: number
+  comments: number
+  url: string
+}
 
 type Props = {
-  data: Data;
-  className?: string;
-  single?: boolean;
-} & ComponentPropsWithRef<"article">;
+  data: Data
+  className?: string
+  single?: boolean
+} & ComponentPropsWithRef<"article">
 
 export const FeedItem = forwardRef<HTMLElement, Props>(
   ({ data, single = false, ...props }, ref) => {
@@ -74,7 +74,7 @@ export const FeedItem = forwardRef<HTMLElement, Props>(
       </article>
     )
   }
-);
+)
 
 const styles = {
   feedItem: css`
@@ -131,4 +131,4 @@ const styles = {
   button: css`
     margin-left: auto;
   `,
-};
+}

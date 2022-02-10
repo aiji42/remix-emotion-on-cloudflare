@@ -2,21 +2,25 @@ import React from "react"
 import { css } from "@emotion/react"
 import feedItemDataset from "~/datas/dummy-feed-items.json"
 import { FeedItem, Data as feedItemDataType } from "~/components/FeedItem"
-import { LoaderFunction, useCatch, useLoaderData } from "remix"
+import { LoaderFunction, useCatch, useLoaderData, useParams } from "remix"
 
 export const loader: LoaderFunction = async ({ params }) => {
+  if (params.post === "client-error") return {}
   const postData = feedItemDataset.find(({ url }) => url.includes(params.post ?? "dummy"))
-  if (!postData) throw new Response("Post is not found", { status: 404 })
-  if (Math.random() > 0.7)
-    throw new Response("これはCatchBoundaryの検証のためにランダムで発生させているエラーです", {
+  if (params.post === "error")
+    throw new Response(null, {
       status: 500,
     })
+  if (!postData) throw new Response(null, { status: 404 })
 
   return postData
 }
 
 export default function Post() {
   const data = useLoaderData<feedItemDataType>()
+  const params = useParams()
+
+  if (params.post === "client-error") throw new Error("client error")
 
   return (
     <>
@@ -35,7 +39,7 @@ export const CatchBoundary = () => {
   return (
     <>
       <p css={styles.error}>Nested Post CatchBoundary: status code is {caught.status}</p>
-      <p>{caught.data}</p>
+      <p>{caught.statusText}</p>
     </>
   )
 }

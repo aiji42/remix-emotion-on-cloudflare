@@ -1,9 +1,9 @@
-import { ComponentPropsWithRef, forwardRef } from "react";
-import { css } from "@emotion/react";
+import { ComponentPropsWithRef, forwardRef } from "react"
+import { css } from "@emotion/react"
 
 type Props = {
-  className?: string;
-} & ComponentPropsWithRef<"footer">;
+  className?: string
+} & ComponentPropsWithRef<"footer">
 
 export const Footer = forwardRef<HTMLElement, Props>(({ ...props }, ref) => {
   return (
@@ -21,8 +21,8 @@ export const Footer = forwardRef<HTMLElement, Props>(({ ...props }, ref) => {
       </div>
       <small css={styles.copyright}>©2021 Logotype</small>
     </footer>
-  );
-});
+  )
+})
 
 const styles = {
   footer: css`
@@ -45,4 +45,4 @@ const styles = {
     display: block;
     margin-top: 8px;
   `,
-};
+}

@@ -1,26 +1,22 @@
-import { ReactNode, ComponentPropsWithRef, forwardRef } from "react";
-import { css } from "@emotion/react";
+import { ReactNode, ComponentPropsWithRef, forwardRef } from "react"
+import { css } from "@emotion/react"
 
 type Props = {
-  children: ReactNode;
-  className?: string;
-  size?: "m" | "s";
-  variant?: "fill" | "border";
-} & ComponentPropsWithRef<"button">;
+  children: ReactNode
+  className?: string
+  size?: "m" | "s"
+  variant?: "fill" | "border"
+} & ComponentPropsWithRef<"button">
 
 export const Button = forwardRef<HTMLButtonElement, Props>(
   ({ children, size = "m", variant = "fill", ...props }, ref) => {
     return (
-      <button
-        css={[styles.base, styles[size], styles[variant]]}
-        {...props}
-        ref={ref}
-      >
+      <button css={[styles.base, styles[size], styles[variant]]} {...props} ref={ref}>
         {children}
       </button>
-    );
+    )
   }
-);
+)
 
 const styles = {
   base: css`
@@ -52,4 +48,4 @@ const styles = {
       color: var(--color-dark-text-high);
     }
   `,
-};
+}

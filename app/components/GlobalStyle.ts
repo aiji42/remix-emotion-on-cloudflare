@@ -1,4 +1,4 @@
-import { Global, css } from "@emotion/react";
+import { Global, css } from "@emotion/react"
 
 export const globalStyles = css`
   :root {
@@ -62,4 +62,4 @@ export const globalStyles = css`
   small {
     font-size: inherit;
   }
-`;
+`
