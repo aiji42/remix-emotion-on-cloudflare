@@ -1,6 +1,7 @@
-import { ComponentPropsWithRef, forwardRef } from "react";
+import React, { ComponentPropsWithRef, forwardRef } from "react";
 import { css } from "@emotion/react";
 import { Button } from "~/components/Button";
+import { Link } from "remix";
 
 export type Data = {
   thumbnail?: string;
@@ -14,51 +15,64 @@ export type Data = {
 type Props = {
   data: Data;
   className?: string;
+  single?: boolean;
 } & ComponentPropsWithRef<"article">;
 
 export const FeedItem = forwardRef<HTMLElement, Props>(
-  ({ data, ...props }, ref) => {
-    const { thumbnail, date, title, favorites, comments, url } = data;
+  ({ data, single = false, ...props }, ref) => {
+    const { thumbnail, date, title, favorites, comments, url } = data
     return (
-      <>
-        <article css={styles.feedItem} {...props} ref={ref}>
-          {thumbnail && (
-            <a href={url} css={styles.thumbnailWrapper}>
-              <img src={thumbnail} alt="" css={styles.thumbnail} />
-            </a>
-          )}
-          <div css={styles.information}>
-            <a href={url} css={styles.itemLink}>
+      <article css={styles.feedItem} {...props} ref={ref}>
+        {thumbnail && (
+          <>
+            {single ? (
+              <div css={styles.thumbnailWrapper}>
+                <img src={thumbnail} alt="" css={styles.thumbnail} />
+              </div>
+            ) : (
+              <Link to={url} css={styles.thumbnailWrapper}>
+                <img src={thumbnail} alt="" css={styles.thumbnail} />
+              </Link>
+            )}
+          </>
+        )}
+        <div css={styles.information}>
+          {single ? (
+            <div>
               <time dateTime={date} css={styles.postedAt}>
                 {date}
               </time>
               <h3 css={styles.title}>{title}</h3>
-            </a>
-            <div css={styles.reactions}>
+            </div>
+          ) : (
+            <Link to={url} css={styles.itemLink}>
+              <time dateTime={date} css={styles.postedAt}>
+                {date}
+              </time>
+              <h3 css={styles.title}>{title}</h3>
+            </Link>
+          )}
+          <div css={styles.reactions}>
             <span className="material-icons-round" css={styles.reactionIcon}>
               favorite
             </span>
-              <span css={styles.reactionCount}>{favorites}</span>
-              <span
-                className="material-icons-round"
-                css={[styles.reactionIcon, { marginLeft: 24 }]}
-              >
+            <span css={styles.reactionCount}>{favorites}</span>
+            <span className="material-icons-round" css={[styles.reactionIcon, { marginLeft: 24 }]}>
               mode_comment
             </span>
-              <span css={styles.reactionCount}>{comments}</span>
-              <Button
-                size="s"
-                variant="border"
-                onClick={() => alert(`「${title}」を保存`)}
-                css={styles.button}
-              >
-                保存
-              </Button>
-            </div>
+            <span css={styles.reactionCount}>{comments}</span>
+            <Button
+              size="s"
+              variant="border"
+              onClick={() => alert(`「${title}」を保存`)}
+              css={styles.button}
+            >
+              保存
+            </Button>
           </div>
-        </article>
-      </>
-    );
+        </div>
+      </article>
+    )
   }
 );
 

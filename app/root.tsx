@@ -1,18 +1,35 @@
+import React, { FC } from "react"
 import {
   Links,
   LiveReload,
+  LoaderFunction,
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration
-} from "remix";
-import type { MetaFunction } from "remix";
-import { Global } from "@emotion/react";
-import { globalStyles } from "~/components/GlobalStyle";
+  ScrollRestoration,
+  useCatch,
+} from "remix"
+import type { MetaFunction } from "remix"
+import { css, Global } from "@emotion/react"
+import { globalStyles } from "~/components/GlobalStyle"
+import { Header } from "~/components/Header"
+import { Navigation } from "~/components/Navigation"
+import { Ranking } from "~/components/Ranking"
+import rankingDataset from "~/datas/dummy-ranking.json"
+import { Footer } from "~/components/Footer"
 
 export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
-};
+  return { title: "New Remix App" }
+}
+
+export const loader: LoaderFunction = ({ params }) => {
+  if (params.post === "root-error")
+    throw new Response("CatchBoundaryの検証のためエラーです。", {
+      status: 500,
+    })
+
+  return null
+}
 
 export function links() {
   return [
@@ -26,25 +43,108 @@ export function links() {
       rel: "stylesheet",
       href: "https://fonts.googleapis.com/icon?family=Material+Icons+Round",
     },
-  ];
+  ]
+}
+
+const Wrapper: FC = ({ children }) => {
+  return (
+    <html lang="en">
+    <head>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <Meta />
+      <Links />
+    </head>
+    <body>
+    {children}
+    <ScrollRestoration />
+    <Scripts />
+    <Global styles={globalStyles} />
+    {process.env.NODE_ENV === "development" && <LiveReload />}
+    </body>
+    </html>
+  )
 }
 
 export default function App() {
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <Global styles={globalStyles} />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
-      </body>
-    </html>
-  );
+    <Wrapper>
+      <Header />
+      <div css={styles.contents}>
+        <Navigation css={styles.navigation} />
+        <main css={styles.main}>
+          <Outlet />
+        </main>
+        <aside css={styles.sidebar}>
+          <Ranking dataset={rankingDataset} />
+          <Footer css={styles.footer} />
+        </aside>
+      </div>
+    </Wrapper>
+  )
+}
+
+export const ErrorBoundary = ({ error }: { error: Error }) => {
+  return (
+    <Wrapper>
+      <Header />
+      <div css={styles.contents}>
+        <Navigation css={styles.navigation} />
+        <main css={[styles.main, errorStyle.main]}>{error.message}</main>
+        <aside css={styles.sidebar}>
+          <Ranking dataset={rankingDataset} />
+          <Footer css={styles.footer} />
+        </aside>
+      </div>
+    </Wrapper>
+  )
+}
+
+export const CatchBoundary = () => {
+  const caught = useCatch()
+  return (
+    <Wrapper>
+      <Header />
+      <div css={styles.contents}>
+        <main css={[styles.main, errorStyle.main]}>
+          CatchBoundary: {caught.status} {caught.data}
+        </main>
+      </div>
+    </Wrapper>
+  )
+}
+
+const styles = {
+  contents: css`
+    display: grid;
+    grid-column-gap: 16px;
+    grid-template-areas: "navigation navigation main main main main main main sidebar sidebar sidebar sidebar";
+    grid-template-columns: repeat(12, minmax(48px, 80px));
+    justify-content: center;
+    padding: 24px 16px 48px;
+  `,
+  navigation: css`
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    grid-area: navigation;
+    position: sticky;
+    top: 88px;
+  `,
+  main: css`
+    grid-area: main;
+  `,
+  sidebar: css`
+    grid-area: sidebar;
+  `,
+  footer: css`
+    margin-top: 16px;
+  `,
+}
+
+const errorStyle = {
+  main: css`
+    font-weight: bold;
+    color: red;
+  `,
 }

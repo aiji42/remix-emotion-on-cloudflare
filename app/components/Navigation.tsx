@@ -1,36 +1,35 @@
-import { ComponentPropsWithRef, forwardRef } from "react";
-import { css } from "@emotion/react";
+import React, { ComponentPropsWithRef, forwardRef } from "react"
+import { css } from "@emotion/react"
+import { Link } from "remix"
 
 type Props = {
-  className?: string;
-} & ComponentPropsWithRef<"nav">;
+  className?: string
+} & ComponentPropsWithRef<"nav">
 
-export const Navigation = forwardRef<HTMLElement, Props>(
-  ({ ...props }, ref) => {
-    return (
-      <nav {...props} ref={ref}>
-        <a href="#" css={styles.link}>
-          <span className="material-icons-round" css={styles.icon}>
-            home
-          </span>
-          <span css={styles.linkText}>ホーム</span>
-        </a>
-        <a href="#" css={styles.link}>
-          <span className="material-icons-round" css={styles.icon}>
-            trending_up
-          </span>
-          <span css={styles.linkText}>トレンド</span>
-        </a>
-        <a href="#" css={styles.link}>
-          <span className="material-icons-round" css={styles.icon}>
-            notifications
-          </span>
-          <span css={styles.linkText}>通知</span>
-        </a>
-      </nav>
-    );
-  }
-);
+export const Navigation = forwardRef<HTMLElement, Props>(({ ...props }, ref) => {
+  return (
+    <nav {...props} ref={ref}>
+      <Link to="/" css={styles.link}>
+        <span className="material-icons-round" css={styles.icon}>
+          home
+        </span>
+        <span css={styles.linkText}>ホーム</span>
+      </Link>
+      <a href="#" css={styles.link}>
+        <span className="material-icons-round" css={styles.icon}>
+          trending_up
+        </span>
+        <span css={styles.linkText}>トレンド</span>
+      </a>
+      <a href="#" css={styles.link}>
+        <span className="material-icons-round" css={styles.icon}>
+          notifications
+        </span>
+        <span css={styles.linkText}>通知</span>
+      </a>
+    </nav>
+  )
+})
 
 const styles = {
   link: css`
@@ -53,4 +52,4 @@ const styles = {
     font-weight: bold;
     margin-left: 8px;
   `,
-};
+}
