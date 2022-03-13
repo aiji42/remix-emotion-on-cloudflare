@@ -42,7 +42,7 @@ const Wrapper: FC = ({ children }) => {
         <ScrollRestoration />
         <Scripts />
         <Global styles={globalStyles} />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+        <LiveReload />
       </body>
     </html>
   )
