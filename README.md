@@ -1,3 +1,8 @@
+**The information here is outdated and does not work this way.**
+**Please refer [here](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-css-props-cloudflare) for the latest information.**
+
+---
+
 # Welcome to Remix!
 
 - [Remix Docs](https://remix.run/docs)
@@ -39,6 +44,9 @@ npm run deploy
 ```
 
 ## Conform to emotion
+
+**The information here is outdated and does not work this way.**
+**Please refer [here](https://github.com/aiji42/remix-esbuild-override/tree/main/examples/emotion-css-props-cloudflare) for the latest information.**
 
 ### 1. Install emotion packages
 
